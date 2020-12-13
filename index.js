@@ -16,13 +16,7 @@ app.post('/images', (req, res) => {
 })
 
 app.post('/images2', (req, res) => {
-    if(!req.file){
-        res.send("aRCHIVO NO ECNONTRADO")
-    
-    }else {
-        file = req.file.fieldname;
-        res.send(file);
-    }
+    res.send(' Su ruta: ' + req.file.path );
 })
 
 app.listen(port, () => {
