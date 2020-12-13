@@ -16,7 +16,7 @@ app.post('/images', (req, res) => {
 })
 
 app.post('/images2', (req, res) => {
-    res.send(' Su ruta: ' + req.file.path );
+    res.send(' Su ruta: ' + req.files.file.path );
 })
 
 app.listen(port, () => {
