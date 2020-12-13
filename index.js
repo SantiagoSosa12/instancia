@@ -41,6 +41,11 @@ app.post('/subir' , upload.single('file') , (req, res) => {
     return res.send(req.file);
 })
 
+app.post('/subir2' , upload.single('file') , (req, res) => {
+    console.log('Storage location is .... ${')
+    return res.send(req.file);
+})
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
