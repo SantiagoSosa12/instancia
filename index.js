@@ -6,8 +6,10 @@ const path = require('path');
 const multer = require('multer');
 var imagenPrueba = 'imagenPrueba.png';
 var Jimp = require('jimp');
-app.use(express.json({limit: '50mb'}));
-app.use(express.urlencoded({limit: '50mb'}));
+var bodyParser = require('body-parser');
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+
 
 var imageCaption = 'La venganza nunca es buena mata el alma y la envenena';
 var loadedImage;
