@@ -15,6 +15,16 @@ app.post('/images', (req, res) => {
     res.send(req.file);
 })
 
+app.post('/images2', (req, res) => {
+    if(!req.file){
+        res.send("aRCHIVO NO ECNONTRADO")
+    
+    }else {
+        file = req.file.fieldname;
+        res.send(file);
+    }
+})
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
