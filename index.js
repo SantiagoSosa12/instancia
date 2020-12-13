@@ -1,35 +1,21 @@
+
 const express = require('express')
 const app = express()
 const port = 3000
-const path = require('path');
-const multer = require('multer');
+var Jimp = require("jimp");
 
-let storage = multer.diskStorage({
-    destination:(req , file, cb)=>{
-        cb(null, './subida')
-    },
-    filename:(req, file, cb)=>{
-        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-    }
+
+app.post('/images', (req, res) => {
+    Jimp.read(req.file , function(err , test) {
+        if(err) throw err;
+        test 
+            .write("La venganza nunca es buena, mata el alma y la envenena");
+        next();
+    })
+    res.send(req.file);
 })
-
-const upload = multer({ storage })
-
-app.use(express.json());
-app.use(express.urlencoded( { extended: true} ));
-
-
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-})
-
-app.post('/subir' , upload.single('file'), (req, res)=>{
-    console.log(`Storage location is :${req.hostname}/${req.file.path}`);
-    return res.send(req.file);
-});
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
-
 
