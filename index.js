@@ -29,24 +29,24 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.post('/subir' , upload.single('file') , (req, res) => {
-    console.log('Storage location is .... ${')
     Jimp.read('./subida/imagenPrueba.png')
-       .then(function (image) {
-           loadedImage = image;
-           return Jimp.loadFont(Jimp.FONT_SANS_64_WHITE);
-       })
-       .then(function (font) {
-           loadedImage.print(font, 10, 10, imageCaption)
-                      .write('./subida/imagenPrueba.png');
-       })
-       .catch(function (err) {
-           console.error(err);
-       });
+    .then(function (image) {
+        loadedImage = image;
+        return Jimp.loadFont(Jimp.FONT_SANS_64_WHITE);
+    })
+    .then(function (font) {
+        loadedImage.print(font, 10, 10, imageCaption)
+        .write('./subida/imagenPrueba.png');
+    })
+    .catch(function (err) {
+        console.error(err);
+    });
+    console.log('Se proceso la imagen :)')
     return res.send(req.file);
 })
 
 app.post('/subir2' , upload.single('file') , (req, res) => {
-    console.log('Storage location is .... ${')
+    console.log('Subida de un archivo NO SE PROCESA LA IMAGEN')
     return res.send(req.file);
 })
 
