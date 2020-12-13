@@ -2,21 +2,43 @@
 const express = require('express')
 const app = express()
 const port = 3000
-var Jimp = require("jimp");
+const path = require('path');
+const multer = require('multer');
+var imagenPrueba = 'imagenPrueba.png';
+var Jimp = require('jimp');
 
+var imageCaption = 'La venganza nunca es buena mata el alma y la envenena';
+var loadedImage;
 
-app.post('/images', (req, res) => {
-    Jimp.read(req.file , function(err , test) {
-        if(err) throw err;
-        test 
-            .write("La venganza nunca es buena, mata el alma y la envenena");
-        next();
-    })
-    res.send(req.file);
-})
+let storage = multer.diskStorage({
+    destination:(req, file, cb) =>{
+        cb(null, './subida')
+    },
+    filename:(req, file, cb)=> {
+        cb(null, imagenPrueba);
+    }
+});
 
-app.post('/images2', (req, res) => {
-    res.send(' Su ruta: ' + req.files.file.path );
+const upload = multer({storage})
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.post('/subir' , upload.single('file') , (req, res) => {
+    console.log('Storage location is .... ${')
+    Jimp.read('./subida/imagenPrueba.png')
+       .then(function (image) {
+           loadedImage = image;
+           return Jimp.loadFont(Jimp.FONT_SANS_64_WHITE);
+       })
+       .then(function (font) {
+           loadedImage.print(font, 10, 10, imageCaption)
+                      .write('./subida/imagenPrueba.png');
+       })
+       .catch(function (err) {
+           console.error(err);
+       });
+    return res.send(req.file);
 })
 
 app.listen(port, () => {
