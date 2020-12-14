@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/SantiagoSosa12/instancia#readme",
   "dependencies": {
+    "axios": "^0.21.0",
     "express": "^4.17.1",
     "jimp": "^0.16.1",
     "morgan": "^1.10.0",
