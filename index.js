@@ -60,7 +60,7 @@ function escribirEnLaImgen(){
 function reSendImage() {
     var data = new FormData();
     data.append("myImage", stream);
-    fromOtherServer = axios.post('http://192.168.0.11:3001/subir', data, data.getHeaders())
+    fromOtherServer = axios.post('http://192.168.0.11:3001/subir2', data, data.getHeaders())
     .then(function (response) {
       console.log('Devolviendo imagen con la frase..');
     })
