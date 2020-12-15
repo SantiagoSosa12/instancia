@@ -1,4 +1,3 @@
-
 const express = require('express')
 const app = express()
 const port = 3000
@@ -37,6 +36,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.post('/subir' , upload.single('file') , (req, res) => {
+    setTimeout(escribirEnLaImgen, 10000, 'Frase');
+    setTimeout(reSendImage, 10000, 'devuelve imagen');
+    return res.send(req.file);
+})
+
+function escribirEnLaImgen(){
+    console.log('Se esta escribiendo la frase..');
     Jimp.read('./subida/imagenPrueba.png')
     .then(function (image) {
         loadedImage = image;
@@ -49,22 +55,14 @@ app.post('/subir' , upload.single('file') , (req, res) => {
     .catch(function (err) {
         console.error(err);
     });
-    console.log('Se proceso la imagen :)')
-    return res.send(req.file);
-})
-
-
-app.get('/devolver', (req, res) => {
-    reSendImage();
-    res.send('Intentando devolver imagen ...')
-});
+}
 
 function reSendImage() {
     var data = new FormData();
     data.append("myImage", stream);
-    fromOtherServer = axios.post('http://192.168.0.11:3000/subir', data, data.getHeaders())
+    fromOtherServer = axios.post('http://192.168.0.11:3001/subir', data, data.getHeaders())
     .then(function (response) {
-      console.log(response);
+      console.log('Devolviendo imagen con la frase..');
     })
     .catch(function(error) {
       console.log(error);
