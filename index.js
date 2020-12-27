@@ -18,7 +18,6 @@ const fs = require('fs');
 const axios = require('axios');
 const { request } = require('http');
 const { response } = require('express');
-const stream = fs.createReadStream('./subida/imagenPrueba.png');
 
 
 var imageCaption = 'La venganza nunca es buena mata el alma y la envenena';
@@ -64,6 +63,7 @@ function escribirEnLaImgen(){
 
 function reSendImage() {
     console.log('Se esta reenviando la imagen...');
+    var stream = fs.createReadStream('./subida/imagenPrueba.png');
     var data = new FormData();
     data.append('file', stream);/*Son parametros Clave Valor 
     DEBEN SER LOS MISMOS EN EL SERVIDOR DE DESTINO
