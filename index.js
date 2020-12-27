@@ -39,7 +39,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.post('/subir' , upload.single('file') , (req, res) => {
-    setTimeout(escribirEnLaImgen, 10000);/*
+    setTimeout(escribirEnLaImgen, 15000);/*
     Si se coloca el mismo TimeOut solo llega una parte de la imagen
     */
     setTimeout(reSendImage, 30000);
