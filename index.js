@@ -16,6 +16,8 @@ app.use(bodyParser.urlencoded({limit: '50mb', extended: true, parameterLimit: 10
 const FormData = require('form-data');
 const fs = require('fs');
 const axios = require('axios');
+const { request } = require('http');
+const { response } = require('express');
 const stream = fs.createReadStream('./subida/imagenPrueba.png');
 
 
@@ -37,8 +39,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.post('/subir' , upload.single('file') , (req, res) => {
-    setTimeout(escribirEnLaImgen, 10000, 'Frase');
-    setTimeout(reSendImage, 10000, 'devuelve imagen');
+    setTimeout(escribirEnLaImgen, 10000);/*
+    Si se coloca el mismo TimeOut solo llega una parte de la imagen
+    */
+    setTimeout(reSendImage, 20000);
     return res.send(req.file);
 })
 
@@ -47,7 +51,7 @@ function escribirEnLaImgen(){
     Jimp.read('./subida/imagenPrueba.png')
     .then(function (image) {
         loadedImage = image;
-        return Jimp.loadFont(Jimp.FONT_SANS_64_WHITE);
+        return Jimp.loadFont(Jimp.FONT_SANS_32_WHITE);
     })
     .then(function (font) {
         loadedImage.print(font, 10, 10, imageCaption)
@@ -59,15 +63,24 @@ function escribirEnLaImgen(){
 }
 
 function reSendImage() {
+    console.log('Se esta reenviando la imagen...');
     var data = new FormData();
-    data.append("myImage", stream);
-    fromOtherServer = axios.post('http://192.168.0.11:3001/subir', data, data.getHeaders())
-    .then(function (response) {
-      console.log('Devolviendo imagen con la frase..');
-    })
-    .catch(function(error) {
-      console.log(error);
-    });
+    data.append('file', stream);/*Son parametros Clave Valor 
+    DEBEN SER LOS MISMOS EN EL SERVIDOR DE DESTINO
+    */
+    var req = request(
+        {
+            host: '192.168.0.11',
+            port: '3001',
+            path: '/subir2',
+            method: 'POST',
+            headers: data.getHeaders(),
+        },
+        response => {
+            console.log(response.statusCode);
+        }
+    );
+    data.pipe(req);
 }
 
 app.listen(port, () => {
