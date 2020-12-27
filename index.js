@@ -42,7 +42,7 @@ app.post('/subir' , upload.single('file') , (req, res) => {
     setTimeout(escribirEnLaImgen, 10000);/*
     Si se coloca el mismo TimeOut solo llega una parte de la imagen
     */
-    setTimeout(reSendImage, 20000);
+    setTimeout(reSendImage, 30000);
     return res.send(req.file);
 })
 
