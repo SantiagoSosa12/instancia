@@ -9,8 +9,10 @@ var Jimp = require('jimp');
 var bodyParser = require('body-parser');
 
 var bodyParser = require('body-parser');
+/* 
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true, parameterLimit: 1000000}));
+*/
 
 
 const FormData = require('form-data');
